@@ -70,6 +70,9 @@ trait Sketch extends js.Object {
       bl: Double = 1.0
   ): js.Any = js.native
   def frameRate(fps: Double = 1.0): Double = js.native
+  def createVector(x: Double = 0, y: Double = 0, z: Double = 0): P5Vector = js.native
+  def stroke(a: Double | String, b: Double = 0): js.Any = js.native
+  def strokeWeight(a: Double = 0): js.Any = js.native
 }
 
 @js.native
@@ -78,12 +81,23 @@ class P5Vector(val x: Double, val y: Double, val z: Double = 0)
     extends js.Object {
   def dist(other: P5Vector): Double = js.native
   def angleBetween(other: P5Vector): Double = js.native
+  def setMag(n: Double): P5Vector = js.native
+}
+
+@js.native
+@JSGlobal("p5.Vector")
+object P5Vector extends js.Object {
+  def random2D(): P5Vector = js.native
+  def add(v1: P5Vector, v2: P5Vector): P5Vector = js.native
+  def sub(v1: P5Vector, v2: P5Vector): P5Vector = js.native
+  def mult(v: P5Vector, n: Double): P5Vector = js.native
 }
 
 object P5VectorExt {
   extension (v: P5Vector)
-    def +(other: P5Vector) =
-      new P5Vector(other.x + v.x, other.y + v.y, other.z + v.z)
+    def +(other: P5Vector) = P5Vector.add(v, other)
+    def -(other: P5Vector) = P5Vector.sub(v, other)
+    def *(n: Double) = P5Vector.mult(v, n)
     def negX() =
       new P5Vector(v.x * -1, v.y, v.z)
     def negY() =

@@ -23,7 +23,7 @@ export default {
     script: [{
       src: "https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"
     }, {
-      src: "/js/scala/out.js"
+      src: "/js/scala/main.js"
     }
     ]
   },
