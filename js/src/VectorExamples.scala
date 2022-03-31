@@ -76,7 +76,7 @@ class VectorExamples03() extends js.Object {
     draw = () =>
       background(250)
       val mouse = new P5Vector(mouseX, mouseY)
-      acc = (mouse - pos).setMag(0.2)
+      acc = (mouse - pos).withMag(0.1)
       vel = vel + acc
       pos = pos + vel
 
@@ -84,5 +84,29 @@ class VectorExamples03() extends js.Object {
       // stroke("red")
       fill("blue")
       circle(pos.x, pos.y, 25)
+  }
+}
+@JSExportTopLevel("SineCosine")
+class SineCosine() extends js.Object {
+  val sketch: js.Function1[Sketch, Unit] = { s =>
+    import s._
+    import scala.math._
+    
+    var pos: P5Vector = null
+    var theta = 0.0
+
+    setup = () =>
+      createCanvas(1000, 200)
+      frameRate(15)
+      
+
+    draw = () =>
+      background(222)
+      val xs = (0 to width.toInt)
+      xs.foreach {x =>
+        val sinX = sin(theta) * 50
+        theta = theta + 0.05
+        point(x, sinX + 100)
+      }
   }
 }

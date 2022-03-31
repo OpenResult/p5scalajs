@@ -60,6 +60,6 @@ case class Ball(pos: P5Vector, speed: P5Vector, diameter: Double) {
 
   // silly bounce, only reverse direction no matter angle of impact
   def bounce(other: Ball): Ball =
-    copy(speed = speed.negXY())
+    copy(speed = speed.neg())
 
 }

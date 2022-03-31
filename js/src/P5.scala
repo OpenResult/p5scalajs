@@ -81,7 +81,10 @@ class P5Vector(val x: Double, val y: Double, val z: Double = 0)
     extends js.Object {
   def dist(other: P5Vector): Double = js.native
   def angleBetween(other: P5Vector): Double = js.native
+  def mag(): Double = js.native
+  @deprecated("Use immutable withMag")
   def setMag(n: Double): P5Vector = js.native
+  def copy(): P5Vector = js.native
 }
 
 @js.native
@@ -91,6 +94,7 @@ object P5Vector extends js.Object {
   def add(v1: P5Vector, v2: P5Vector): P5Vector = js.native
   def sub(v1: P5Vector, v2: P5Vector): P5Vector = js.native
   def mult(v: P5Vector, n: Double): P5Vector = js.native
+  def div(v: P5Vector, n: Double): P5Vector = js.native
 }
 
 object P5VectorExt {
@@ -98,12 +102,16 @@ object P5VectorExt {
     def +(other: P5Vector) = P5Vector.add(v, other)
     def -(other: P5Vector) = P5Vector.sub(v, other)
     def *(n: Double) = P5Vector.mult(v, n)
+    def /(n: Double) = P5Vector.div(v, n)
     def negX() =
       new P5Vector(v.x * -1, v.y, v.z)
     def negY() =
       new P5Vector(v.x, v.y * -1, v.z)
-    def negXY() =
-      new P5Vector(v.x * -1, v.y * -1, v.z)
+    def neg() = v * -1
+    def withMag(mag: Double) =
+      v.copy().setMag(mag)
+    def withMag(f: Double => Double) =
+      v.copy().setMag(f(v.mag()))
 }
 
 @js.native

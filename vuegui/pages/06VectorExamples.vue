@@ -18,6 +18,9 @@ export default {
 
     const b3 = new VectorExamples03();
     new p5(b3.sketch, "p5id3");
+
+    const b4 = new SineCosine();
+    new p5(b4.sketch, "p5id4");
   },
 };
 </script>
