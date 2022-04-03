@@ -7,6 +7,7 @@ import org.scalajs.dom
 
 import upickle.default._
 import shared.Protocol
+import p5._
 import P5VectorExt._
 import scala.util.Random
 
@@ -64,7 +65,7 @@ class VectorExamples03() extends js.Object {
 
     var pos: P5Vector = null
     var vel = new P5Vector(1.1, 1.1)
-    var acc = new P5Vector(1.1, 1.1)
+    //var acc = new P5Vector(1.1, 1.1)
 
     setup = () =>
       createCanvas(400, 400)
@@ -76,7 +77,7 @@ class VectorExamples03() extends js.Object {
     draw = () =>
       background(250)
       val mouse = new P5Vector(mouseX, mouseY)
-      acc = (mouse - pos).withMag(0.1)
+      val acc = (mouse - pos).withMag(0.1)
       vel = vel + acc
       pos = pos + vel
 

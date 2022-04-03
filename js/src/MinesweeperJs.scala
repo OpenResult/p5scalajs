@@ -2,6 +2,7 @@ import scala.scalajs.js
 import js.timers.setTimeout
 import js.annotation.JSExportTopLevel
 import minesweeper._
+import p5._
 
 @JSExportTopLevel("Minesweeper")
 class Minesweeper(statusCallback: js.Function1[String, Unit]) extends js.Object {
@@ -10,7 +11,7 @@ class Minesweeper(statusCallback: js.Function1[String, Unit]) extends js.Object 
     val rows = 10
     val cols = 10
     val cellSize = 40
-    val mines = 5
+    val mines = 12
     val timeout: Double => (=> Unit) => Unit = setTimeout(_)
     var board: Board = new Board(rows, cols, cellSize, timeout)
         .withMines(mines)

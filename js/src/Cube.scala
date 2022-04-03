@@ -6,6 +6,7 @@ import matrix.MatrixVectorExt._
 import matrix.Matrix
 import matrix.Matrix._
 import matrix.MatrixExt._
+import p5._
 
 @JSExportTopLevel("SpinningCube")
 class SpinningCube() extends js.Object {

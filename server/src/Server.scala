@@ -1,5 +1,6 @@
 import upickle.default.{ReadWriter => RW, macroRW}
 import upickle.default._
+
 import java.time.Instant
 import cask.router.NoOpParser
 import scala.util.Random
@@ -7,6 +8,8 @@ import java.time.Clock
 import shared.Protocol
 import castor.SimpleActor
 import cask.endpoints.WsChannelActor
+import java.io.File
+import scala.util.Random._
 
 class WebServer() {}
 object WebServer extends cask.Main {
@@ -28,7 +31,7 @@ case class WebPageRoutes()(implicit cc: castor.Context, log: cask.Logger)
     val filePath: String =
       if request.remainingPathSegments.isEmpty ||
         (!request.remainingPathSegments.last.endsWith(".js") &&
-        !request.remainingPathSegments.last.endsWith(".js.map"))
+          !request.remainingPathSegments.last.endsWith(".js.map"))
       then "./vuegui/dist/index.html"
       else "./vuegui/dist/" + request.remainingPathSegments.mkString("/")
       end if
@@ -53,6 +56,18 @@ case class WebPageRoutes()(implicit cc: castor.Context, log: cask.Logger)
     headers = Seq("Content-Type" -> "text/javascript")
   )
   def staticFiles() = "out/js/fastOpt.dest"
+
+  @cask.getJson(
+    "/words"
+  )
+  def words(count: Int) = {
+    val startIndex = between(0, 100000)
+    wordsJson.drop(startIndex).take(count)
+  }
+  lazy val wordsJson: Seq[String] = {
+    val f = File("./server/resources/svenska-ord.json")
+    shuffle(read[Seq[String]](f))
+  }
 
   @cask.websocket("/connect/:userName")
   def connect(userName: String): cask.WebsocketResult = {

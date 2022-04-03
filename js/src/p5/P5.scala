@@ -1,12 +1,16 @@
+package p5
+
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.annotation.JSGlobal
+import org.scalajs.dom.KeyboardEvent
 
 @js.native
 trait Sketch extends js.Object {
   var setup: js.Function0[Unit]
   var draw: js.Function0[Unit]
+  var keyPressed: js.Function1[KeyboardEvent, Boolean]
   var CENTER: String = js.native
   var HALF_PI: js.Any = js.native
   var PI: js.Any = js.native

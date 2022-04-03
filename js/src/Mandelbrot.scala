@@ -1,6 +1,7 @@
 import scala.scalajs.js
 import js.annotation.JSExportTopLevel
 import mandelbrot.Mandelbrot._
+import p5._
 
 @JSExportTopLevel("Mandelbrot")
 class Mandelbrot() extends js.Object {

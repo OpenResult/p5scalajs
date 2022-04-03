@@ -7,6 +7,7 @@ import org.scalajs.dom
 
 import upickle.default._
 import shared.Protocol
+import p5._
 import P5VectorExt._
 
 @JSExportTopLevel("Bounce")
