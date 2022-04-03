@@ -1,42 +1,52 @@
 import scala.scalajs.js
+import js.timers.setTimeout
 import js.annotation.JSExportTopLevel
 import minesweeper._
 
 @JSExportTopLevel("Minesweeper")
-class Minesweeper() extends js.Object {
+class Minesweeper(statusCallback: js.Function1[String, Unit]) extends js.Object {
   val sketch: js.Function1[Sketch, Unit] = { s =>
     import s._
     val rows = 10
     val cols = 10
     val cellSize = 40
-    val mines = 10
-    var board: Board = null
+    val mines = 5
+    val timeout: Double => (=> Unit) => Unit = setTimeout(_)
+    var board: Board = new Board(rows, cols, cellSize, timeout)
+        .withMines(mines)
+        .statusCallback(statusCallback)
 
     setup = () =>
-      board = new Board(rows, cols, cellSize)
-        .withMines(mines)
-
       val cnvs = createCanvas(board.cols * cellSize, board.rows * cellSize)
       cnvs.mousePressed { () =>
         board = board.click(mouseX, mouseY)
         if board.ended then noLoop()
       }
+      Board.gameLoop(board)
 
     draw = () =>
       background(232)
       board.forCells { c =>
         val x = c.x(cellSize)
         val y = c.y(cellSize)
-        rect(x, y, cellSize, cellSize)
         if c.revealed then
+          stroke(100)
+          rect(x, y, cellSize, cellSize)
+          
           if c.mine then
+            push()
+            fill("red")
             circle(x + cellSize / 2, y + cellSize / 2, cellSize * 0.8)
+            pop()
           else
             text(
               "" + board.neighbouringMines(c),
               x + cellSize / 2,
               y + cellSize / 2
             )
+        else
+          stroke(200)
+          rect(x, y, cellSize, cellSize)
       }
   }
 }

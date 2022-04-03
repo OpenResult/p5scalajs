@@ -19,8 +19,8 @@ class Bounce() extends js.Object {
 
     setup = { () =>
       createCanvas(800, 400)
-      ball = new Ball(P5Vector(100, 100), P5Vector(1, 3.3), 75)
-      ball2 = new Ball(P5Vector(300, 300), P5Vector(1.5, 4.3), 55)
+      ball = Ball(P5Vector(100, 100), P5Vector(1, 3.3), 75)
+      ball2 = Ball(P5Vector(300, 300), P5Vector(1.5, 4.3), 55)
     }
 
     draw = { () =>

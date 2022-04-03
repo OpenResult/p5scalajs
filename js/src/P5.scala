@@ -49,6 +49,8 @@ trait Sketch extends js.Object {
       v3: Double = 1.0,
       a: Double = 1.0
   ): Unit = js.native
+  def noFill(): js.Any = js.native
+  def noStroke(): js.Any = js.native
   def height: Double = js.native
   def width: Double = js.native
   def triangle(

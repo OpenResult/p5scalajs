@@ -31,10 +31,10 @@ class Forces() extends js.Object {
       balls = balls
         .map { ball =>
 
-          val mMag = map(mouse.dist(ball.pos), 0, 800, 0.1, 0.01)
+          val mMag = map(mouse.dist(ball.pos), 0, 800, 0.2, 0.01)
           val toMouseAcc = (mouse - ball.pos).withMag(mMag)
 
-          val cMag = map(center.dist(ball.pos), 0, 800, 0.1, 0.01)
+          val cMag = map(center.dist(ball.pos), 0, 800, 0.2, 0.01)
           val toCenterForce = (center - ball.pos).withMag(cMag)
 
           ball
