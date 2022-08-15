@@ -10,13 +10,24 @@ import castor.SimpleActor
 import cask.endpoints.WsChannelActor
 import java.io.File
 import scala.util.Random._
+import routes.MultiPlayerRoutes
+import routes.MultiplayerBackendInMem
+import routes.MultiPlayerProtocol.Game
 
 class WebServer() {}
 object WebServer extends cask.Main {
   override def port: Int = 8384
   override def host: String = "0.0.0.0"
   val allRoutes = Seq(
-    WebPageRoutes()
+    WebPageRoutes(),
+    MultiPlayerRoutes(
+      new MultiplayerBackendInMem(
+        Map(
+          "gid1" -> Game("gid1", "game1"),
+          "gid2" -> Game("gid2", "game2")
+        )
+      )
+    )
   )
   println(s"Starting/listening on $host:$port")
 }

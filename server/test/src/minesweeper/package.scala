@@ -1,11 +1,11 @@
 import utest._
 package object minesweeper {
-  
+  val immediateTimeout: (Double, () => Unit) => Unit = (d, b) => b()  
   def assertPosition(b: Board, col: Int, row: Int) =
     b.getCell(Position(col, row)) ==>
       b.getCellByCordinates(col, row)
 
-  def createTestBoard(s: String): Board =
+  def createTestBoard(s: String, ended: Boolean = false): Board =
     
     val lines = s.linesIterator.filterNot(_.isEmpty).toSeq
     val cols = lines(0).size
@@ -21,10 +21,12 @@ package object minesweeper {
       }
       .map(c => c.p -> c)
       .toMap
-    Board(rows, cols, 1).withMines(mines)
+    
+    Board(rows, cols, 1, immediateTimeout).withMines(mines)
 
   def assertBoard(expected: String, b: Board) =
-      createTestBoard(expected) ==> b
+      val eb = createTestBoard(expected)
+      eb.cells ==> b.cells
 
       
 }

@@ -4,7 +4,7 @@ case class Board(
     rows: Int,
     cols: Int,
     cellSize: Int,
-    timeout: Double => (=> Unit) => Unit,
+    timeout: (Double, () => Unit) => Unit,
     cells: Map[Position, Cell] = Map(),
     ended: Boolean = false,
     statusCallback: Option[String => Unit] = None
@@ -16,7 +16,8 @@ case class Board(
 
   lazy val completed: Boolean = {
     allCells.forall { c =>
-      (c.revealed && !c.mine) || (!c.revealed && c.mine) }
+      (c.revealed && !c.mine) || (!c.revealed && c.mine)
+    }
   }
 
   def click(x: Double, y: Double): Board =
@@ -28,8 +29,7 @@ case class Board(
     else
       val revealed = floodReveal(c)
       val b = this.copy(cells = this.cells ++ revealed)
-      if b.completed then
-        b.copy(ended = true)
+      if b.completed then b.copy(ended = true)
       else b
 
   def floodReveal(
@@ -101,9 +101,9 @@ object Board {
         board.statusCallback
           .foreach(_(s"Time: $time"))
 
-        board.timeout(333) {
+        board.timeout(333, { () =>
           loop()
-        }
+        })
     }
 }
 

@@ -12,4 +12,3 @@ in [Scala.js](https://www.scala-js.org).
 - p5js reference https://p5js.org/reference/ (note that only few things are in the [facade](js/src/P5.scala) today and needs to be added when required)
 - [scalajs](https://www.scala-js.org)
 
-

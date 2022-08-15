@@ -12,7 +12,8 @@ class Minesweeper(statusCallback: js.Function1[String, Unit]) extends js.Object 
     val cols = 10
     val cellSize = 40
     val mines = 12
-    val timeout: Double => (=> Unit) => Unit = setTimeout(_)
+    val timeout: (Double, (() => Unit)) => Unit = (d, f) =>
+      setTimeout(d)(f)
     var board: Board = new Board(rows, cols, cellSize, timeout)
         .withMines(mines)
         .statusCallback(statusCallback)

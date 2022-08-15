@@ -4,8 +4,9 @@ import mill.scalajslib._
 import mill.define.TaskModule
 
 val utestVersion = "0.7.11"
-val upickle = "1.4.3"
+val upickle = "1.5.0"
 val sv = "3.1.1"
+val requestsVersion = "0.7.0"
 
 trait Common extends ScalaModule {
   def scalaVersion = sv
@@ -18,7 +19,8 @@ trait Common extends ScalaModule {
 
 object server extends Common {
   def ivyDeps = super.ivyDeps() ++ Agg(
-    ivy"com.lihaoyi::cask:0.8.0"
+    ivy"com.lihaoyi::cask:0.8.0",
+    ivy"com.lihaoyi::requests:$requestsVersion",
   )
   override def sources = T.sources {
     super.sources() ++ vuegui.sources()
