@@ -13,8 +13,7 @@ class SpinningCube() extends js.Object {
   val sketch: js.Function1[Sketch, Unit] = { s =>
     import s._
 
-    var cube = Cube(0, 0, 0)
-    var angle = 0.01
+    var cube = Cube()
 
     setup = () =>
       createCanvas(500, 500)
@@ -22,9 +21,10 @@ class SpinningCube() extends js.Object {
     draw = () =>
       background(255)
       translate(width / 2, height / 2)
+      val angle = millis() / 10000
       val rotation = rotationX(angle)
         .matmult(rotationY(angle))
-        .matmult(rotationY(angle))
+        .matmult(rotationZ(angle))
       val c = cube
         .map(_.matmult(rotation))
         .map(_.projected)
@@ -38,12 +38,11 @@ class SpinningCube() extends js.Object {
         fill(0, 200, 0)
         circle(v.x, v.y, d)
       }
-      angle = angle + 0.01
   }
 }
 
 object Cube:
-  def apply(x: Double, y: Double, z: Double, r: Double = 0.5) =
+  def apply(r: Double = 0.5) =
     new Cube(
       Seq(
         Seq(r, r, r),

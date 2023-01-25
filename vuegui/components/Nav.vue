@@ -6,6 +6,7 @@
     <NuxtLink to="/03minesweeper">Minesweeper</NuxtLink> |
     <NuxtLink to="/04cube">Cube</NuxtLink> |
     <NuxtLink to="/05mandelbrot">Mandelbrot</NuxtLink> |
+    <NuxtLink to="/07rubikscube">Rubiks Cube</NuxtLink> |
     <NuxtLink to="/typing">Typing</NuxtLink> |
     <NuxtLink to="/about">About</NuxtLink>
   </div>

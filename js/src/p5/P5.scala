@@ -12,11 +12,12 @@ trait Sketch extends js.Object {
   var draw: js.Function0[Unit]
   var keyPressed: js.Function1[KeyboardEvent, Boolean]
   var CENTER: String = js.native
-  var HALF_PI: js.Any = js.native
-  var PI: js.Any = js.native
-  var QUARTER_PI: js.Any = js.native
-  var TAU: js.Any = js.native
-  var TWO_PI: js.Any = js.native
+  var HALF_PI: Double = js.native
+  var PI: Double = js.native
+  var QUARTER_PI: Double = js.native
+  var TAU: Double = js.native
+  var TWO_PI: Double = js.native
+  var WEBGL: String = js.native
   var mouseX: Double = js.native
   var mouseY: Double = js.native
   var pixels: js.Array[Int] = js.native
@@ -27,16 +28,29 @@ trait Sketch extends js.Object {
       start2: Double,
       stop2: Double
   ): Double = js.native
-  def translate(x: Double, y: Double): js.Any = js.native
+  def color(s: String): P5Color = js.native
+  def translate(x: Double, y: Double, z: Double = 0): js.Any = js.native
+  def translate(x: P5Vector): js.Any = js.native
   def dist(x1: Double, y1: Double, x2: Double, y2: Double): Double = js.native
   def pixelDensity(d: Double): js.Any = js.native
+  def rotate(a: Double, vector: P5Vector): js.Any = js.native
   def loadPixels(): js.Any = js.native
   def updatePixels(): js.Any = js.native
+  def millis(): Double = js.native
   def push(): js.Any = js.native
   def pop(): js.Any = js.native
+  def specularMaterial(c: P5Color): js.Any = js.native
+  def sphere(r: Double): js.Any = js.native
+  def rotateX(d: Double): js.Any = js.native
+  def rotateY(d: Double): js.Any = js.native
+  def rotateZ(d: Double): js.Any = js.native
   def ellipse(a: Double, b: Double, c: Double, d: Double): js.Any = js.native
   def line(x1: Double, y1: Double, x2: Double, y2: Double): js.Any = js.native
+  def line(x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double): js.Any = js.native
   def point(x: Double, y: Double): js.Any = js.native
+  def plane(x: Double, y: Double): js.Any = js.native
+  def box(x: Double, y: Double, z: Double): js.Any = js.native
+  def box(x: Double): js.Any = js.native
   def text(s: String, x: Double, y: Double): js.Any = js.native
   def textAlign(a: String, b: String): js.Any = js.native
   def textSize(size: Double): js.Any | Double = js.native
@@ -52,6 +66,9 @@ trait Sketch extends js.Object {
       v2: Double = 1.0,
       v3: Double = 1.0,
       a: Double = 1.0
+  ): Unit = js.native
+  def fill(
+      v1: P5Color
   ): Unit = js.native
   def noFill(): js.Any = js.native
   def noStroke(): js.Any = js.native
@@ -79,8 +96,16 @@ trait Sketch extends js.Object {
   def createVector(x: Double = 0, y: Double = 0, z: Double = 0): P5Vector = js.native
   def stroke(a: Double | String, b: Double = 0): js.Any = js.native
   def strokeWeight(a: Double = 0): js.Any = js.native
+  def applyMatrix(m:  js.Array[Double]): js.Any = js.native
+  def scale(s: Double): js.Any = js.native
+  def rectMode(s: String): js.Any = js.native
 }
 
+@js.native
+@JSGlobal("p5.Color")
+class P5Color(val c: String)
+    extends js.Object {
+}
 @js.native
 @JSGlobal("p5.Vector")
 class P5Vector(val x: Double, val y: Double, val z: Double = 0)
@@ -105,6 +130,18 @@ object P5Vector extends js.Object {
 
 object P5VectorExt {
   extension (v: P5Vector)
+    def rotateX(angle: Double) =
+      val m = matrix.P5Matrix()
+      m.rotateX(angle)
+      m.translate(v.x, v.y, v.z)
+      new P5Vector(m.x, m.y, m.z)
+
+    def rotateZ(angle: Double) =
+      val m = matrix.P5Matrix()
+      m.rotateZ(angle)
+      m.translate(v.x, v.y, v.z)
+      new P5Vector(m.x, m.y, m.z)
+
     def +(other: P5Vector) = P5Vector.add(v, other)
     def -(other: P5Vector) = P5Vector.sub(v, other)
     def *(n: Double) = P5Vector.mult(v, n)

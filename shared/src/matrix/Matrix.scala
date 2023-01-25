@@ -7,7 +7,7 @@ object MatrixVectorExt {
   extension (mv: MatrixVector)
     def vecmult(that: MatrixVector) = mv
       .zip(that)
-      .map { (x, y) => x * y }
+      .map(_ * _)
       .foldLeft(0.0)(_ + _)
 
     def x = mv(0)

@@ -13,11 +13,12 @@ import scala.util.Random._
 
 class WebServer() {}
 object WebServer extends cask.Main {
-  override def port: Int = 8384
+  override def port: Int = 8388
   override def host: String = "0.0.0.0"
   val allRoutes = Seq(
     WebPageRoutes()
   )
+  Thread.sleep(250) // wait not to get Address already in use when using `mill -w` flag
   println(s"Starting/listening on $host:$port")
 }
 

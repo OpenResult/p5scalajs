@@ -1,4 +1,5 @@
 import utest._
+import scala.concurrent.Future
 package object minesweeper {
   
   def assertPosition(b: Board, col: Int, row: Int) =
@@ -21,10 +22,14 @@ package object minesweeper {
       }
       .map(c => c.p -> c)
       .toMap
-    Board(rows, cols, 1).withMines(mines)
+    Board(rows, cols, 1, timeout).withMines(mines)
 
   def assertBoard(expected: String, b: Board) =
-      createTestBoard(expected) ==> b
+      val ex = createTestBoard(expected)
+      ex.cells ==> b.cells
 
-      
+  val timeout: Double => (=> Unit) => Unit = d => {
+    val f: (=> Unit) => Unit = _f => _f
+    f
+  }
 }

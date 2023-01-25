@@ -18,7 +18,8 @@ trait Common extends ScalaModule {
 
 object server extends Common {
   def ivyDeps = super.ivyDeps() ++ Agg(
-    ivy"com.lihaoyi::cask:0.8.0"
+    ivy"com.lihaoyi::cask:0.8.0",
+    ivy"com.lihaoyi::os-lib:0.9.0"
   )
   override def sources = T.sources {
     super.sources() ++ vuegui.sources()
