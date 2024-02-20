@@ -24,7 +24,8 @@ case class P5Matrix(
       m20, m21, m22, m23,
       m30, m31, m32, m33
     )
-    def translate(tx: Double, ty: Double, tz: Double) = {
+    def translate(tx: Long, ty: Long, tz: Long): Unit = translate(tx.toDouble, ty.toDouble, tz.toDouble)
+    def translate(tx: Double, ty: Double, tz: Double): Unit = {
       m03 = m03 + tx*m00 + ty*m01 + tz*m02;
       m13 = m13 + tx*m10 + ty*m11 + tz*m12;
       m23 = m23 + tx*m20 + ty*m21 + tz*m22;

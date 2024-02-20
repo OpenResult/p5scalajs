@@ -17,6 +17,7 @@ object HeadsUp:
     var cs = s
       .split(" ")
       .map(Card.fromCode)
+      .toSeq
 
     HeadsUp(
       Hand(cs.take(5)),

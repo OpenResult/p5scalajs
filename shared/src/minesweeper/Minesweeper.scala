@@ -23,7 +23,7 @@ case class Board(
     val c = getCellByCordinates(x, y)
     if ended then this
     else if c.mine then
-      val revealedCells = this.cells.mapValues(_.copy(revealed = true)).toMap
+      val revealedCells = this.cells.view.mapValues(_.copy(revealed = true)).toMap
       this.copy(cells = revealedCells, ended = true)
     else
       val revealed = floodReveal(c)
@@ -89,7 +89,7 @@ object Board {
       val seconds = elaps / 1000
       val minutes = seconds / 60
       val s = seconds % 60
-      val time = minutes + ":" + (if s < 10 then "0" + s else s)
+      val time = s"$minutes:" + (if s < 10 then "0" + s else s)
 
       if board.ended && board.completed then
         board.statusCallback

@@ -113,8 +113,7 @@ class P5Vector(val x: Double, val y: Double, val z: Double = 0)
   def dist(other: P5Vector): Double = js.native
   def angleBetween(other: P5Vector): Double = js.native
   def mag(): Double = js.native
-  @deprecated("Use immutable withMag")
-  def setMag(n: Double): P5Vector = js.native
+  protected[p5] def setMag(n: Double): P5Vector = js.native
   def copy(): P5Vector = js.native
 }
 
@@ -134,13 +133,13 @@ object P5VectorExt {
       val m = matrix.P5Matrix()
       m.rotateX(angle)
       m.translate(v.x, v.y, v.z)
-      new P5Vector(m.x, m.y, m.z)
+      new P5Vector(m.x.toDouble, m.y.toDouble, m.z.toDouble)
 
     def rotateZ(angle: Double) =
       val m = matrix.P5Matrix()
       m.rotateZ(angle)
       m.translate(v.x, v.y, v.z)
-      new P5Vector(m.x, m.y, m.z)
+      new P5Vector(m.x.toDouble, m.y.toDouble, m.z.toDouble)
 
     def +(other: P5Vector) = P5Vector.add(v, other)
     def -(other: P5Vector) = P5Vector.sub(v, other)

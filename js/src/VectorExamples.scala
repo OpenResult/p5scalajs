@@ -1,7 +1,7 @@
 import scala.scalajs.js
 import js.annotation.JSExportTopLevel
 import js.annotation.JSExport
-import org.scalajs.dom.raw._
+import org.scalajs.dom._
 
 import org.scalajs.dom
 
